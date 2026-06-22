@@ -1,0 +1,9 @@
+{
+  "report_email": "you@example.com",
+  "server_ip": "203.0.113.10",
+  "auth_domains": [
+    "example.com"
+  ],
+  "max_auth_domains": 25,
+  "mail_log_tail_lines": 7000
+}

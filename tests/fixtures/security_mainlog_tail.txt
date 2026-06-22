@@ -1,0 +1,3 @@
+2026-06-21 10:01:01 authenticator failed for ([203.0.113.5]) [203.0.113.5]: 535 Incorrect authentication data (set_id=alice@example.com)
+2026-06-21 10:02:02 authenticator failed for ([198.51.100.8]) [198.51.100.8]: 535 Incorrect authentication data (set_id=bob@example.com)
+2026-06-21 10:03:03 authenticator failed for ([203.0.113.5]) [203.0.113.5]: 535 Incorrect authentication data (set_id=alice@example.com)

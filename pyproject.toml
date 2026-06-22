@@ -1,0 +1,35 @@
+[project]
+name = "zahosts-health"
+version = "2.1.0"
+description = "WHM plugin that consolidates cPanel/WHM server health (mail, DNSBL, email auth, backup, AutoSSL, WordPress, security) into one panel and a daily report."
+# The refactored package targets Python 3.8+ for broad WHM/cPanel compatibility.
+# PEP 604/585 annotations are postponed by `from __future__ import annotations`.
+requires-python = ">=3.8"
+readme = "README.md"
+license = { text = "MIT" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra -q"
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 120
+target-version = "py38"
+# The legacy monolith is kept verbatim as the fallback collector and is SHA256-pinned
+# against the installed server copy (see the handoff). It must not be modified, so it
+# is excluded from linting entirely rather than style-fixed.
+extend-exclude = ["zahosts_health.py"]
+
+[tool.ruff.lint]
+# Conservative set: pyflakes (F), pycodestyle (E/W), isort (I), bugbear (B), pyupgrade (UP)
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = [
+    "E501",
+    "B008",
+    "UP031",
+    "UP035",  # typing.Mapping/Sequence imports kept during the 3.8->3.10 migration
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B"]

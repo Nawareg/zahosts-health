@@ -1,0 +1,97 @@
+name: CI
+
+# Assumes the repository root is the plugin directory (the folder containing
+# pyproject.toml, zahosts_health/, index.php, and tests/). If you publish the
+# plugin from a sub-path of a larger repo, set `defaults.run.working-directory`
+# below to that sub-path, e.g. "whm-plugin/zahosts-health".
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Block premium/internal files
+        run: |
+          if git ls-files | grep -E '^(remediation/|tests/remediation/|OBSERVE\.md|DEPLOYMENT\.md|PUBLISHING-CHECKLIST\.md)'; then
+            echo "Premium/internal file present in open repo"; exit 1; fi
+
+      - name: Block project-specific secrets
+        run: |
+          pattern='213[.]136[.]83[.]218|info[@]zahosts|sv[-]trans|hosting[.]zahosts'
+          pattern="${pattern}|empros""zein"
+          if grep -rnE "$pattern" . --exclude-dir=.git; then
+            echo "Project-specific secret present"; exit 1; fi
+
+  python:
+    name: Python lint, compile & tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Package targets 3.8+ for broad WHM/cPanel compatibility; 3.12 catches current Python drift.
+        python-version: ["3.8", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dev dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Ruff lint
+        run: python -m ruff check .
+
+      - name: Byte-compile all Python (collector + legacy fallback)
+        run: |
+          python -m py_compile zahosts_health.py
+          python -m py_compile zahosts_health/*.py zahosts_health/collectors/*.py
+
+      - name: Run tests
+        run: python -m pytest
+
+  php:
+    name: PHP lint (WHM UI)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          coverage: none
+
+      - name: Lint index.php
+        # WHM ships PHP 7.x/8.x; -l only checks syntax, which is what we gate on.
+        run: php -l index.php
+
+  package:
+    name: Packaging dry-run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate install/uninstall scripts parse
+        run: |
+          bash -n scripts/install.sh
+          bash -n scripts/uninstall.sh
+
+      - name: Validate shipped JSON/config are well-formed
+        run: |
+          python3 -m json.tool zahosts-health.json.example > /dev/null
+          echo "config JSON OK"

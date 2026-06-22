@@ -1,0 +1,8 @@
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+
+# Refresh the WHM dashboard cache every hour.
+17 * * * * root /usr/local/zahosts-health/zahosts_health.py collect >/dev/null 2>&1
+
+# Send the daily digest to the configured WHM contact email.
+35 7 * * * root /usr/local/zahosts-health/zahosts_health.py send-report >/dev/null 2>&1

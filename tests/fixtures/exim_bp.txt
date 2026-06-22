@@ -1,0 +1,8 @@
+ 0m  1.2K 1rABcd-0001aB-2X <user@example.com>
+          someone@example.com
+
+ 5m  3.4K 1rEFgh-0002Cd-9Y <>
+          bounce-target@example.net
+
+12m  0.9K 1rIJkl-0003Ef-7Z <noreply@example.com>
+          recipient@outlook.com

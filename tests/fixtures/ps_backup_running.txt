@@ -1,0 +1,2 @@
+12345 /usr/local/cpanel/bin/backup --force
+999 python3 /usr/local/zahosts-health/zahosts_health.py collect

@@ -1,0 +1,2 @@
+"""Zahosts Health collector package."""
+

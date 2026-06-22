@@ -1,0 +1,11 @@
+remediation/
+tests/remediation/
+OBSERVE.md
+DEPLOYMENT.md
+PUBLISHING-CHECKLIST.md
+zahosts-health.json
+*.jsonl
+.codex-ssh/
+.owner-ssh/
+__pycache__/
+*.pyc

@@ -1,0 +1,6 @@
+2026-06-21 14:01:11 1rABcd-0001aB-2X <= user@example.com H=(localhost) [127.0.0.1] P=esmtpa
+2026-06-21 14:02:30 dovecot_login authenticator failed for (User) [203.0.113.5]:51514 I=[203.0.113.10]:587: 535 Incorrect authentication data (set_id=you@example.com)
+2026-06-21 14:02:33 dovecot_login authenticator failed for (User) [203.0.113.5]:51520 I=[203.0.113.10]:587: 535 Incorrect authentication data (set_id=sales@example.com)
+2026-06-21 14:05:09 1rEFgh-0002Cd-9Y ** recipient@outlook.com R=dkim_lookuphost T=remote_smtp H=mail.protection.outlook.com [104.47.0.1]: SMTP error from remote mail server after RCPT: 451 4.7.500 Server busy
+2026-06-21 14:06:42 1rIJkl-0003Ef-7Z == recipient@hotmail.com R=dkim_lookuphost T=remote_smtp defer (-53): retry time not reached; S77719
+2026-06-21 14:09:55 fixed_login authenticator failed for (User) [198.51.100.9]:40012 I=[203.0.113.10]:465: 535 Incorrect authentication data (set_id=admin)

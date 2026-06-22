@@ -1,0 +1,5 @@
+# Development / CI dependencies only. The plugin itself uses the Python 3 standard
+# library exclusively (no runtime third-party packages), so production installs
+# need nothing from PyPI.
+pytest>=7.4
+ruff>=0.5
