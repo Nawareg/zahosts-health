@@ -13,7 +13,7 @@ One-glance health for cPanel/WHM servers: mail queue, DNSBL, email auth, backups
 ## Install (5 minutes)
 
 ```bash
-git clone https://github.com/your-org/zahosts-health
+git clone https://github.com/Nawareg/zahosts-health
 cd zahosts-health
 sudo ./scripts/install.sh
 sudo cp zahosts-health.json.example /etc/zahosts-health.json
